@@ -37,12 +37,13 @@
                         <div class="navbar-nav mr-auto">
                             <a class="nav-item nav-link" href="{% url 'itreporting:home' %}">Home</a>
                             <a class="nav-item nav-link" href="{% url 'itreporting:about' %}">About</a>
-                            <a class="nav-item nav-link" href="#">Report</a>
+                            <a class="nav-item nav-link" href="/report/">Report</a>
                             <a class="nav-item nav-link" href="{% url 'itreporting:contact' %}">Contact</a>
                         </div>
                         <!-- Navbar Right Side -->
                         <div class="navbar-nav">
                             {% if user.is_authenticated %}
+                            <a class="nav-item nav-link" href="{% url 'itreporting:issue-create' %}">Report New Issue</a>
                             <a class="nav-item nav-link" href="/profile/">Profile</a>
                             <form method="post" id="frm_logout" action="/logout/"
                             style="display:inline;">
