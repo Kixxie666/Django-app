@@ -9,27 +9,28 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
+
 import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-4s$)jbf@=6b0n08bpca@f7l7qhbdzx)gmha(&-$k^=jm2*4bro'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-4s$)jbf@=6b0n08bpca@f7l7qhbdzx)gmha(&-$k^=jm2*4bro')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+WEBSITE_HOSTNAME = os.environ.get('WEBSITE_HOSTNAME', None)
+DEBUG = WEBSITE_HOSTNAME is None
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [WEBSITE_HOSTNAME] if not DEBUG else []
+if not DEBUG:
+    CSRF_TRUSTED_ORIGINS = [f'https://{WEBSITE_HOSTNAME}']
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -58,7 +59,7 @@ ROOT_URLCONF = 'itapps.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-       'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -73,61 +74,68 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'itapps.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'DjangoDB1',
+        'USER': 'C2025401',
+        'PASSWORD': 'Password123!',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
+AZURE_SA_NAME = os.environ['AZURE_SA_NAME']
+AZURE_SA_KEY = os.environ['AZURE_SA_KEY']
 
-STATIC_URL = 'static/'
-MEDIA_URL = '/media/'
-MEDIA_ROOT=BASE_DIR /'media'
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.azure_storage.AzureStorage",
+        "OPTIONS": {
+            "account_name": AZURE_SA_NAME,
+            "account_key": AZURE_SA_KEY,
+            "azure_container": "media",
+        },
+    },
+    "staticfiles": {
+        "BACKEND": "storages.backends.azure_storage.AzureStorage",
+        "OPTIONS": {
+            "account_name": AZURE_SA_NAME,
+            "account_key": AZURE_SA_KEY,
+            "azure_container": "static",
+        },
+    },
+}
+
+STATIC_URL = f'https://{AZURE_SA_NAME}.blob.core.windows.net/static/'
+MEDIA_URL = f'https://{AZURE_SA_NAME}.blob.core.windows.net/media/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap4'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'itreporting:home'
-LOGIN_URL = 'login'
+LOGIN_URL = 'itreporting:home'
