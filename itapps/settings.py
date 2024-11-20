@@ -24,11 +24,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-4s$)jbf@=6b0n08bpca@f
 
 # SECURITY WARNING: don't run with debug turned on in production!
 WEBSITE_HOSTNAME = os.environ.get('WEBSITE_HOSTNAME', None)
-DEBUG = WEBSITE_HOSTNAME is None
-
-ALLOWED_HOSTS = [WEBSITE_HOSTNAME] if not DEBUG else []
-if not DEBUG:
-    CSRF_TRUSTED_ORIGINS = [f'https://{WEBSITE_HOSTNAME}']
+DEBUG = WEBSITE_HOSTNAME == None
 
 # Application definition
 INSTALLED_APPS = [
