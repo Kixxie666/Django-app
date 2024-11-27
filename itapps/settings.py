@@ -14,6 +14,17 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-4s$)jbf@=6b0n08bpca@f
 WEBSITE_HOSTNAME = os.environ.get('WEBSITE_HOSTNAME', None)
 DEBUG = WEBSITE_HOSTNAME == None
 
+# ALLOWED_HOSTS = []
+if DEBUG: 
+
+    ALLOWED_HOSTS = [] 
+
+else: 
+
+    ALLOWED_HOSTS = [WEBSITE_HOSTNAME] 
+
+    CSRF_TRUSTED_ORIGINS = [f'https://{WEBSITE_HOSTNAME}']
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -60,16 +71,37 @@ WSGI_APPLICATION = 'itapps.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'DjangoDB1',
-        'USER': 'C2025401',
-        'PASSWORD': 'Password123!',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'DjangoDB1',
+#         'USER': 'C2025401',
+#         'PASSWORD': 'Password123!',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
+
+DATABASES = { 
+
+    'default': { 
+
+        'ENGINE': 'django.db.backends.mysql', 
+
+        'NAME': os.environ['AZURE_DB_NAME'], 
+
+        'HOST': os.environ['AZURE_DB_HOST'], 
+
+        'PORT': os.environ['AZURE_DB_PORT'], 
+
+        'USER': os.environ['AZURE_DB_USER'], 
+
+        'PASSWORD': os.environ['AZURE_DB_PASSWORD'], 
+
+    } 
+
+} 
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
