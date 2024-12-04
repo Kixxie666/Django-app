@@ -72,7 +72,7 @@ fi
 export AZURE_DB_NAME='deployment'
 export AZURE_DB_HOST='nu2345.mysql.database.azure.com'
 export AZURE_DB_PORT='3306'
-export AZURE_DB_USER='c2025401'
+export AZURE_DB_USER='C2025401'
 export AZURE_DB_PASSWORD='Ryan@9999'
 export AZURE_SA_NAME='storagec2025401'
 export AZURE_SA_KEY='X1TYmm0fELGoGet3d5ihulaC/eKSJE1iS81pqCeCpZG46wZYxOuMUz/nKadvzTvsIwTUwue2eJ9y+AStjsUY7A=='
