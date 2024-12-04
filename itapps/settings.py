@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'itapps.wsgi.application'
 #     }
 # }
 
-DATABASES = { 
+DATABASES = {     
 
     'default': { 
 
