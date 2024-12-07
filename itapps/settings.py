@@ -169,3 +169,9 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap4'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'itreporting:home'
 LOGIN_URL = 'itreporting:home'
+
+# Looking to send emails in production? Check out our Email API/SMTP product!
+EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
+EMAIL_HOST_USER = 'f84858e3ff1492'
+EMAIL_HOST_PASSWORD = '2b055a4c7d176c'
+EMAIL_PORT = '2525'

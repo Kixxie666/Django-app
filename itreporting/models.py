@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db import models
+from django.core.validators import EmailValidator
 from django.utils import timezone
 from django.contrib.auth.models import User
 
@@ -21,3 +22,11 @@ class Issue(models.Model):
     author = models.ForeignKey(User, related_name = 'issues', on_delete=models.CASCADE)
     def __str__(self):
         return f'{self.type} Issue in {self.room}'
+    
+    
+class Contact(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.CharField(validators=[EmailValidator()], max_length=100)
+    subject = models.CharField(max_length=100)
+    message = models.CharField(max_length=100)
+    address = models.CharField(max_length= 100)

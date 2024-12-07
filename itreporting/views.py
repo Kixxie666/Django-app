@@ -3,9 +3,10 @@ from django.http import HttpResponse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from .models import Issue
+from .forms import ContactForm
 from django.views.generic.edit import DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
-
+from django.core.mail import EmailMessage
 
 def home(request):
     return render(request, 'itreporting/home.html', {'title': 'Welcome'})
@@ -73,3 +74,30 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return self.request.user == issue.author
 
 
+def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            # Save the form data to the database
+            form.save()
+
+            # Get the cleaned data from the form
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+
+            # Send email
+            email_message = EmailMessage(
+                'Contact Form Submission from {}'.format(name),
+                message,
+                'form-response@example.com',  # Send from your website
+                ['test.mailtrap1234@gmail.com'],  # Your admin email
+                reply_to=[email],  # Reply to the email from the form
+            )
+            email_message.send()
+
+            return HttpResponse('Thank you for contacting us. We will respond as soon as possible.')
+    else:
+        form = ContactForm()  # Create a blank form for GET requests
+
+    return render(request, 'itreporting/contact.html', {'form': form})
