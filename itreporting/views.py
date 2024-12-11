@@ -7,9 +7,31 @@ from .forms import ContactForm
 from django.views.generic.edit import DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.core.mail import EmailMessage
+import requests
 
 def home(request):
-    return render(request, 'itreporting/home.html', {'title': 'Welcome'})
+    
+    url = 'https://api.openweathermap.org/data/2.5/weather?q={},{}&units=metric&appid={}'
+    cities = [('Sheffield', 'UK'), ('Melaka', 'Malaysia'), ('Bandung', 'Indonesia')]
+    weather_data = []
+    api_key = '6e9c2e5749db49381e2789580e8ce734'
+
+    for city in cities:
+        # Request the API data and convert the JSON to Python data types
+        city_weather = requests.get(url.format(city[0], city[1], api_key)).json()
+
+        # Safely create weather dictionary (use .get() for robustness)
+        weather = {
+            'city': city_weather.get('name', 'N/A') + ', ' + city_weather.get('sys', {}).get('country', 'N/A'),
+            'temperature': city_weather.get('main', {}).get('temp', 'N/A'),
+            'description': city_weather.get('weather', [{}])[0].get('description', 'No description')
+        }
+
+        # Append data for the current city
+        weather_data.append(weather)
+
+    return render(request, 'itreporting/home.html', {'title': 'Homepage', 'weather_data': weather_data})
+
 
 def about(request):
     return render(request, 'itreporting/about.html', {'title': 'About'})
@@ -101,3 +123,4 @@ def contact(request):
         form = ContactForm()  # Create a blank form for GET requests
 
     return render(request, 'itreporting/contact.html', {'form': form})
+
