@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db import models
 from django.core.validators import EmailValidator
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -17,7 +16,7 @@ class Issue(models.Model):
     room = models.CharField(max_length=100)
     urgent = models.BooleanField(default = False)
     details = models.TextField()
-    date_submitted = models.DateTimeField(default=timezone.now)
+    date_submitted = models.DateTimeField(auto_now_add=True)
     description = models.TextField()
     author = models.ForeignKey(User, related_name = 'issues', on_delete=models.CASCADE)
     def __str__(self):
@@ -30,3 +29,26 @@ class Contact(models.Model):
     subject = models.CharField(max_length=100)
     message = models.CharField(max_length=100)
     address = models.CharField(max_length= 100)
+    
+class CouseModule(models.Model):
+    name = models.CharField(max_length=100)
+    code = models.CharField(max_length=100)
+    credit = models.CharField(max_length=100)
+    category = models.CharField(max_length=100)
+    description = models.CharField(max_length= 100)
+    availability= models.CharField(max_length= 100)
+    register = models.CharField(max_length= 100)
+    
+    
+class Student1(models.Model):
+    dob= models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    country = models.CharField(max_length=100)
+    photo = models.ImageField(default='default.png', upload_to='profile_pics')
+
+    
+class Registration1(models.Model):
+    student = models.CharField(max_length=100)
+    module = models.CharField(max_length=100)
+    registerdate= models.CharField(max_length=100)
