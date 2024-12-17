@@ -41,6 +41,9 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarToggle">
                         <ul class="navbar-nav ms-auto">
+                            <li class="nav-item"><a class="nav-link" href="{% url 'itreporting:course-list' %}">Modules</a> 
+                          <!--- <li class="nav-item"><a class="nav-link" href="{% url 'itreporting:student-list' %}">Students</a> -->
+                            <li class="nav-item"><a class="nav-link" href="{% url 'itreporting:registration-list' %}">Registrations</a>
                             <li class="nav-item"><a class="nav-link" href="{% url 'itreporting:home' %}">Home</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'itreporting:about' %}">About</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'itreporting:report' %}">Report</a></li>
@@ -70,22 +73,6 @@
                 {% block content %}{% endblock %}
             </div>
             {% block sidebar %}{% endblock %}
-            <!-- Sidebar with General Information -->
-            <div class="col-md-4">
-                <div class="content-section p-3 mb-3 bg-light rounded shadow-sm">
-                    <h3 class="h5">General Information</h3>
-                    <p class="text-muted">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero.
-                    </p>
-                    <ul class="list-group">
-                        <li class="list-group-item list-group-item-light">Latest Issues Reported</li>
-                        <li class="list-group-item list-group-item-light">IT Policies</li>
-                        <li class="list-group-item list-group-item-light">IT Regulations</li>
-                        <li class="list-group-item list-group-item-light">Upcoming Events</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Optional JavaScript -->

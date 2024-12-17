@@ -1,0 +1,9 @@
+{% extends "itreporting/base.html" %}
+{% block content %}
+<h1>Modules</h1>
+<ul>
+  {% for course in courses %}
+    <li>{{ course.name }} ({{ course.code }})</a></li>
+  {% endfor %}
+</ul>
+{% endblock %}

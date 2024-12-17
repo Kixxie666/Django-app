@@ -69,7 +69,7 @@ if [ -n "${BASH:-}" -o -n "${ZSH_VERSION:-}" ] ; then
 fi
 
 
-export AZURE_DB_NAME='deployment'
+export AZURE_DB_NAME='production'
 export AZURE_DB_HOST='nu2345.mysql.database.azure.com'
 export AZURE_DB_PORT='3306'
 export AZURE_DB_USER='c2025401'

@@ -1,0 +1,12 @@
+{% extends "itreporting/base.html" %}
+{% block content %}
+<h1>Registration List</h1>
+<ul>
+  {% for registration in registrations %}
+    <li>
+        Registration: {{ registration.pk }} - Student: {{ registration.student }} - Module: {{ registration.module }}
+      </a>
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}

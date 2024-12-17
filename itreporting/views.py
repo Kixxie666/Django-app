@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
@@ -8,6 +8,35 @@ from django.views.generic.edit import DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.core.mail import EmailMessage
 import requests
+from .models import CouseModule, Student1, Registration1
+
+
+# Views for CouseModule
+def course_list(request):
+    courses = CouseModule.objects.all()
+    return render(request, 'itreporting/course_list.html', {'courses': courses})
+
+def course_detail(request, pk):
+    course = get_object_or_404(CouseModule, pk=pk)
+    return render(request, 'itreporting/course_detail.html', {'course': course})
+
+# Views for Student1
+def student_list(request):
+    students = Student1.objects.all()
+    return render(request, '', {'students': students})
+
+def student_detail(request, pk):
+    student = get_object_or_404(Student1, pk=pk)
+    return render(request, 'itreporting/student_detail.html', {'student': student})
+
+# Views for Registration1
+def registration_list(request):
+    registrations = Registration1.objects.all()
+    return render(request, 'itreporting/registration_list.html', {'registrations': registrations})
+
+def registration_detail(request, pk):
+    registration = get_object_or_404(Registration1, pk=pk)
+    return render(request, 'itreporting/registration_detail.html', {'registration': registration})
 
 def home(request):
     
