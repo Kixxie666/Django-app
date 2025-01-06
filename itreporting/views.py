@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from .models import Issue
-from .forms import ContactForm
+from .forms import ContactForm, StudentRegistrationForm
 from django.views.generic.edit import DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.core.mail import EmailMessage
@@ -152,3 +152,14 @@ def contact(request):
 
     return render(request, 'itreporting/contact.html', {'form': form})
 
+
+
+def register_student(request):
+    if request.method == 'POST':
+        form = StudentRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('students:register_success')  # Add a success page
+    else:
+        form = StudentRegistrationForm()
+    return render(request, 'students/register.html', {'form': form})

@@ -3,7 +3,6 @@ from . import views
 from users import views as user_views
 from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView
 
-
 app_name = 'itreporting'
 
 urlpatterns = [
@@ -20,6 +19,8 @@ urlpatterns = [
     path('courses/', views.course_list, name='course-list'),
     path('courses/<int:pk>/', views.course_detail, name='course-detail'),
     path('students/', views.student_list, name='student-list'),
+    path('register/', user_views.register, name='register'),
+    path('register/student/', views.register_student, name='student-register'),
     path('students/<int:pk>/', views.student_detail, name='student'),  
     path('registrations/', views.registration_list, name='registration-list'),
     path('registrations/<int:pk>/', views.registration_detail, name='registration-detail'),

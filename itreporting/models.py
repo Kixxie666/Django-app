@@ -41,12 +41,18 @@ class CouseModule(models.Model):
     
     
 class Student1(models.Model):
-    dob= models.CharField(max_length=100)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    email = models.EmailField(unique=True)
+    date_of_birth = models.DateField()
+    enrollment_date = models.DateField(auto_now_add=True)
     address = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
     country = models.CharField(max_length=100)
     photo = models.ImageField(default='default.png', upload_to='profile_pics')
 
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
     
 class Registration1(models.Model):
     student = models.CharField(max_length=100)
