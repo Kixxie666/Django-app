@@ -1,11 +1,28 @@
 {% extends "itreporting/base.html" %}
+
 {% block content %}
-<h1>{{ course.name }}</h1>
-<p><strong>Code:</strong> {{ course.code }}</p>
-<p><strong>Credits:</strong> {{ course.credit }}</p>
-<p><strong>Category:</strong> {{ course.category }}</p>
-<p><strong>Description:</strong> {{ course.description }}</p>
-<p><strong>Availability:</strong> {{ course.availability }}</p>
-<p><strong>Register:</strong> {{ course.register }}</p>
-<a href="{% url 'itreporting:course-list' %}">Back to Course List</a>
+  <div class="course-detail">
+    <h1>{{ course.name }}</h1>
+    <hr>
+
+    <div class="course-info">
+      <p><strong>Code:</strong> {{ course.code }}</p>
+      <p><strong>Credits:</strong> {{ course.credit }}</p>
+      <p><strong>Category:</strong> {{ course.category }}</p>
+      <p><strong>Description:</strong></p>
+      <p>{{ course.description }}</p>
+      <p><strong>Availability:</strong> {{ course.availability }}</p>
+      <p><strong>Register:</strong> 
+        {% if course.register %}
+          <a href="{{ course.register }}" target="_blank" rel="noopener">Register Here</a>
+        {% else %}
+          <span>Not available</span>
+        {% endif %}
+      </p>
+    </div>
+
+    <div class="navigation">
+      <a href="{% url 'itreporting:course-list' %}" class="btn btn-primary">Back to Course List</a>
+    </div>
+  </div>
 {% endblock %}

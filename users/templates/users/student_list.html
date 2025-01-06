@@ -1,0 +1,23 @@
+{% extends "itreporting/base.html" %}
+
+{% block content %}
+  <h1>Student List</h1>
+  <p>Debug: {{ students }}</p> <!-- Check if students is being passed -->
+  <div class="student-list">
+    {% for student in students %}
+      <div class="student-item card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">
+              {{ student.name }}
+          </h5>
+          <p class="card-text">
+            <strong>Email:</strong> {{ student.email }} <br>
+            <strong>Phone:</strong> {{ student.phone }} <br>
+          </p>
+        </div>
+      </div>
+    {% empty %}
+      <p>No students found.</p> <!-- In case there are no students -->
+    {% endfor %}
+  </div>
+{% endblock %}

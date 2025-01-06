@@ -23,11 +23,11 @@ def course_detail(request, pk):
 # Views for Student1
 def student_list(request):
     students = Student1.objects.all()
-    return render(request, '', {'students': students})
+    return render(request, 'users/student_list.html', {'students': students})
 
 def student_detail(request, pk):
     student = get_object_or_404(Student1, pk=pk)
-    return render(request, 'itreporting/student_detail.html', {'student': student})
+    return render(request, 'users/student_detail.html', {'student': student})
 
 # Views for Registration1
 def registration_list(request):
@@ -46,17 +46,16 @@ def home(request):
     api_key = '6e9c2e5749db49381e2789580e8ce734'
 
     for city in cities:
-        # Request the API data and convert the JSON to Python data types
+
         city_weather = requests.get(url.format(city[0], city[1], api_key)).json()
 
-        # Safely create weather dictionary (use .get() for robustness)
+
         weather = {
             'city': city_weather.get('name', 'N/A') + ', ' + city_weather.get('sys', {}).get('country', 'N/A'),
             'temperature': city_weather.get('main', {}).get('temp', 'N/A'),
             'description': city_weather.get('weather', [{}])[0].get('description', 'No description')
         }
 
-        # Append data for the current city
         weather_data.append(weather)
 
     return render(request, 'itreporting/home.html', {'title': 'Homepage', 'weather_data': weather_data})

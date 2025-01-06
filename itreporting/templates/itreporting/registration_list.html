@@ -1,12 +1,18 @@
 {% extends "itreporting/base.html" %}
+
 {% block content %}
-<h1>Registration List</h1>
-<ul>
-  {% for registration in registrations %}
-    <li>
-        Registration: {{ registration.pk }} - Student: {{ registration.student }} - Module: {{ registration.module }}
-      </a>
-    </li>
-  {% endfor %}
-</ul>
+  <h1>Registration List</h1>
+  <div class="registration-list">
+    {% for registration in registrations %}
+      <div class="registration-item card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Registration ID: {{ registration.pk }}</h5>
+          <p class="card-text">
+            <strong>Student:</strong> {{ registration.student }} <br>
+            <strong>Module:</strong> {{ registration.module }}
+          </p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 {% endblock %}
